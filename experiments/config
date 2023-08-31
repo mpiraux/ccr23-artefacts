@@ -1,0 +1,4 @@
+bind	0.0.0.0:53
+# Enter below the DNS resolver within your network, e.g. 192.168.1.1:53
+proxy   TODO
+timeout	2s
