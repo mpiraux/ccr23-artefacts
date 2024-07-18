@@ -50,12 +50,16 @@ highs['type'] = 'high'
 exp3s['type'] = 'exp3'
 data = pd.concat([lows, exp3s, highs]).sort_values(by='mode')
 
-fig, (ax, ax2) = plt.subplots(1, 2, figsize=(3.35*1.08,2.25), dpi=200, width_ratios=[3/4, 1/4], layout='constrained')
+# Use data.groupby(by=['network', 'type']).describe() to get the medians as reported in Table 3
+
+fig, (ax, ax2) = plt.subplots(1, 2, figsize=(3.35, 1.5), dpi=300, width_ratios=[3/4, 1/4], layout='constrained')
 plt.rcParams.update({
     "legend.fontsize": 8,
     "figure.labelsize": 10,
     "xtick.labelsize": 10,
     "ytick.labelsize": 10,
+    "axes.labelsize": 10,
+    "axes.titlesize": 10,
 })
 
 ax = sns.violinplot(ax=ax, data=data[data.network != '4G FWA'], x='network', hue='type', y='mean_conn_time', cut=0, order=['Campus', 'DSL', 'Cable'], bw=.15, legend=False, linewidth=1)

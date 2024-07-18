@@ -69,30 +69,30 @@ for cid, bp in enumerate(['v4', 'v6', 'none']):
     avg_expected_gain))], color=f'C{cid}')
     ax2.plot(sorted(a.avg_expected_gain), [x/len(a.avg_expected_gain) for x in range(len(a.
     avg_expected_gain))], color=f'C{cid}', linestyle='--')
-    v = (a.avg_expected_gain * a.best_path_choice).fillna(0)
+    v = (a.avg_expected_gain * a.best_path_choice).fillna(-1)
     ax2.plot(sorted(v), [x/len(v) for x in range(len(v))], color=f'C{cid}', linestyle='-.')
    
 ax2.set_xlabel('Absolute expected gain \n per request (ms)')
 ax2.set_xticks(ticks=[0, 50, 100, 150, 200, 250])
-ax2.set_xlim(0, 250)
+ax2.set_xlim(0, 125)
 ax2.set_ylim(0, 1)
 ax2.grid(color='lightgrey')
 
 for cid, bp in enumerate(['v4', 'v6', 'none']):
     a = gains[gains.best_path == bp]
-    ax3.plot(sorted((a.avg_expected_gain * a.median_best_choice / a.median_duration.fillna(float('inf'))).fillna(0)), [x/len(a.avg_expected_gain) for x in range(len(a.avg_expected_gain))], color=f'C{cid}')
-    ax3.plot(sorted((a.avg_expected_gain / a.median_duration.fillna(float('inf'))).fillna(0)), [x/len(a.avg_expected_gain) for x in range(len(a.avg_expected_gain))], color=f'C{cid}', linestyle='--')
-    v = (a.avg_expected_gain * a.best_path_choice / a.median_duration.fillna(float('inf'))).fillna(0)
+    ax3.plot(sorted((a.avg_expected_gain * a.median_best_choice / a.median_duration.fillna(float('inf'))).fillna(-1)), [x/len(a.avg_expected_gain) for x in range(len(a.avg_expected_gain))], color=f'C{cid}')
+    ax3.plot(sorted((a.avg_expected_gain / a.median_duration.fillna(float('inf'))).fillna(-1)), [x/len(a.avg_expected_gain) for x in range(len(a.avg_expected_gain))], color=f'C{cid}', linestyle='--')
+    v = (a.avg_expected_gain * a.best_path_choice / a.median_duration.fillna(float('inf'))).fillna(-1)
     ax3.plot(sorted(v), [x/len(v) for x in range(len(v))], color=f'C{cid}', linestyle='-.')
 
 ax3.set_xlabel('Expected gain per request \n relative to median RCT')
-ax3.set_xlim(0, 1)
+ax3.set_xlim(0, 0.5)
 ax3.set_ylim(0, 1)
 ax3.grid(color='lightgrey')
-from matplotlib.lines import Line2D
-custom_lines = [Line2D([0], [0], linestyle='-', color='C0', lw=1),
-                Line2D([0], [0], linestyle='-', color='C1', lw=1),
-                Line2D([0], [0], linestyle='-', color='C2', lw=1),
+from matplotlib.patches import Patch
+custom_lines = [Patch(facecolor='C0'),
+                Patch(facecolor='C1'),
+                Patch(facecolor='C2'),
                 Line2D([0], [0], linestyle='-', color='black', lw=1),
                 Line2D([0], [0], linestyle='--', color='black', lw=1),
                 Line2D([0], [0], linestyle='-.', color='black', lw=1)]
